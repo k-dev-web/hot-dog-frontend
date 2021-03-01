@@ -42,7 +42,6 @@
       "react-app/jest"
     ]
   },
-  "proxy": "https://hot-dog-backend.herokuapp.com/",
   "browserslist": {
     "production": [
       ">0.2%",
