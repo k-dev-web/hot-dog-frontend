@@ -1,0 +1,26 @@
+img {
+    height: 60px;
+}
+
+
+nav ul a {
+    color: black;
+}
+
+nav.nav-center ul li.button-crud {
+    justify-content: center;
+}
+
+nav.nav-center ul li {
+    display: inline;
+    float: none;
+}
+
+nav.nav-center ul li a {
+    display: inline-block;
+}
+
+.nav-wrapper {
+    padding-left: 50px;
+    padding-right: 50px;
+}
