@@ -42,10 +42,11 @@
       "react-app/jest"
     ]
   },
+  "proxy": "https://hot-dog-backend.herokuapp.com/",
   "browserslist": {
     "production": [
       ">0.2%",
-      "nodeclare module 'react-materialize';\ndeclare module 'react-router';\ndeclare module 'flux';t dead",
+      "not dead",
       "not op_mini all"
     ],
     "development": [
@@ -61,6 +62,7 @@
     "@types/redux-logger": "^3.0.8"
   },
   "typeRoots": [
+    "../node_modules/@types",
     "../@types"
   ]
 }
