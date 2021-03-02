@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
 import store from "../store";
@@ -13,7 +13,7 @@ const uniqueName = (value: any, id: any) =>
 
 export let HotDogForm: any = (props: any) => {
     const {convertImgToBase64, convertUrl, getHotDogs, sendHotDog} = HotDogProvider();
-    const [url] = useState("http://hot-dog-backend.herokuapp.com/uploads/" + props.product.id + ".jpg?date:" + new Date,);
+    const [url,setUrl] = useState("http://hot-dog-backend.herokuapp.com/uploads/" + props.product.id + ".jpg?date:" + new Date,);
     const [isEdit, setIsEdit] = useState(false);
     const [error, setError] = useState({name: '', price: '', description: ''});
     const [action, setAction] = useState(false);
@@ -26,6 +26,9 @@ export let HotDogForm: any = (props: any) => {
             props.autofill('file', tmp)
         }
     }
+    useEffect(() => {
+        setUrl("http://hot-dog-backend.herokuapp.com/uploads/" + props.product.id + ".jpg?date:" + new Date);
+    }, [])
 
     props.load({
         id: props.product?.id ? props.product?.id : null,
