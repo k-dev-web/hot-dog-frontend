@@ -12,8 +12,17 @@ export const NavBar = (data: any) => {
         <nav className="nav-center" role="navigation">
             <div className="nav-wrapper container white">
                 <ul>
-                    <li><img className="left" src={logo}/></li>
-                    <li><a className="waves-effect waves-light btn black" onClick={clickCrud}>CRUD</a></li>
+                    <li>
+                        <img
+                            alt=''
+                            className="left" src={logo}
+                        />
+                    </li>
+                    <li>
+                        <a
+                            className="waves-effect waves-light btn black"
+                            href='#'
+                            onClick={clickCrud}>CRUD</a></li>
                     <ShowModal {...{type: 'link', editCard: data.editCard}}></ShowModal>
                 </ul>
             </div>

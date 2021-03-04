@@ -26,10 +26,10 @@ export class ShowModal extends React.Component {
     }
     setInput = () => {
         if (this.data.type && this.data.type === 'link') {
-            this.typeInput = <a className="right" onClick={this.showModal}>add hot-dog</a>
+            this.typeInput = <a href='#' className="right" onClick={this.showModal}>add hot-dog</a>
         } else {
             this.typeInput =
-                <a className="waves-effect waves-light btn modal-trigger" onClick={this.showModal}>Modal</a>
+                <a href='#' className="waves-effect waves-light btn modal-trigger" onClick={this.showModal}>Modal</a>
         }
     }
 

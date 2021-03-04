@@ -1,10 +1,9 @@
-import React, {useEffect, useReducer, useState} from 'react';
+import React, {useEffect, useReducer} from 'react';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
 import store from "../store";
 import {HotDogProvider} from "../providers/HotDogProvider";
 import './Card.css'
-
 
 
 const dataFetchReducer = (state: any, action: any) => {
@@ -13,29 +12,28 @@ const dataFetchReducer = (state: any, action: any) => {
         case 'SET_URL':
             return {
                 ...state,
-                url:"http://hot-dog-backend.herokuapp.com/uploads/" + action.data.id + ".jpg?date:" + new Date()
+                url: "http://hot-dog-backend.herokuapp.com/uploads/" + action.data.id + ".jpg?date:" + new Date()
             }
         case 'SET_IS_EDIT':
             return {
                 ...state,
-                isEdit:action.data,
+                isEdit: action.data,
             }
         case 'SET_ERROR':
             return {
                 ...state,
-                error:action.data,
+                error: action.data,
             }
         case 'SET_ACTION':
             return {
                 ...state,
-                action:action.data,
+                action: action.data,
             }
 
         default:
             throw state;
     }
 };
-
 
 
 const number = (value: any) => value && isNaN(Number(value)) ? 'Must be a number' : ''
@@ -46,10 +44,10 @@ const uniqueName = (value: any, id: any) =>
 export let HotDogForm: any = (props: any) => {
     const {convertImgToBase64, convertUrl, getHotDogs, sendHotDog} = HotDogProvider();
     const [state, dispatch] = useReducer(dataFetchReducer, {
-        url:"http://hot-dog-backend.herokuapp.com/uploads/" + props.product.id + ".jpg?date:" + new Date(),
-        isEdit:false,
-        error:{name: '', price: '', description: ''},
-        action:false
+        url: "http://hot-dog-backend.herokuapp.com/uploads/" + props.product.id + ".jpg?date:" + new Date(),
+        isEdit: false,
+        error: {name: '', price: '', description: ''},
+        action: false
     });
 
     props.autofill('file', '')
@@ -61,7 +59,7 @@ export let HotDogForm: any = (props: any) => {
         }
     }
     useEffect(() => {
-       dispatch({type: 'SET_URL',data:{id:props.product.id}});
+        dispatch({type: 'SET_URL', data: {id: props.product.id}});
     }, [])
 
     props.load({
@@ -74,16 +72,16 @@ export let HotDogForm: any = (props: any) => {
 
     const clickChangeCard = async () => {
         store.getState().editCard.edit()
-        dispatch({type: 'SET_IS_EDIT',data:true});
+        dispatch({type: 'SET_IS_EDIT', data: true});
 
         store.dispatch({type: 'SET PROPERTY', data: {id: props.product?.id, property: {isEdit: true}}});
         store.dispatch({type: 'EDIT', data: {changeTypeIn: changeCard, id: props.product?.id}});
 
     }
     const changeCard = async () => {
-        dispatch({type: 'SET_IS_EDIT',data:false});
+        dispatch({type: 'SET_IS_EDIT', data: false});
         await store.dispatch({type: 'SET PROPERTY', data: {id: props.product?.id, property: {isEdit: false}}});
-        dispatch({type: 'SET_URL',data:{id:props.product.id}});
+        dispatch({type: 'SET_URL', data: {id: props.product.id}});
 
     }
 
@@ -91,7 +89,7 @@ export let HotDogForm: any = (props: any) => {
         if (state.action) {
             return;
         }
-        dispatch({type: 'SET_ACTION',data:true});
+        dispatch({type: 'SET_ACTION', data: true});
 
         let answer = await sendHotDog('DELETE', 'deleteProducts', {id: props.product.id});
         if (answer.message === 'ok') {
@@ -103,7 +101,7 @@ export let HotDogForm: any = (props: any) => {
         }
         await getHotDogs();
         await changeCard();
-        dispatch({type: 'SET_ACTION',data:false});
+        dispatch({type: 'SET_ACTION', data: false});
 
     }
 
@@ -112,7 +110,7 @@ export let HotDogForm: any = (props: any) => {
         if (state.action) {
             return;
         }
-        dispatch({type: 'SET_ACTION',data:true});
+        dispatch({type: 'SET_ACTION', data: true});
 
         if (store.getState().form?.['form' + props.product.id]?.values?.imageLink?.length) {
             let tmp = await convertUrl(store.getState().form?.['form' + props.product.id]?.values?.imageLink);
@@ -120,7 +118,7 @@ export let HotDogForm: any = (props: any) => {
         }
         let form = store.getState().form?.['form' + props.product.id]?.values;
         let tmpError = {name: '', price: '', description: ''};
-        dispatch({type: 'SET_ERROR',data:tmpError});
+        dispatch({type: 'SET_ERROR', data: tmpError});
 
 
         let sendData: { [i: string]: any } = {id: props.product.id};
@@ -133,8 +131,8 @@ export let HotDogForm: any = (props: any) => {
         tmpError.name = uniqueName(sendData?.name, props.product.id);
         tmpError.price = number(sendData?.price);
         if (tmpError.name || tmpError.price || tmpError.description) {
-            dispatch({type: 'SET_ERROR',data:tmpError});
-            dispatch({type: 'SET_ACTION',data:false});
+            dispatch({type: 'SET_ERROR', data: tmpError});
+            dispatch({type: 'SET_ACTION', data: false});
 
             store.dispatch({type: 'TOAST', data: {type: 'Error', message: "fix error in form"}});
             return;
@@ -148,14 +146,14 @@ export let HotDogForm: any = (props: any) => {
             await getHotDogs();
             changeCard();
 
-            dispatch({type: 'SET_ACTION',data:false});
+            dispatch({type: 'SET_ACTION', data: false});
             store.dispatch({type: 'TOAST', data: {type: 'Success', message: "hot dog update"}});
 
         } else {
             store.dispatch({type: 'TOAST', data: {type: 'Error', message: "error in update" + answer.message}});
 
             console.log(answer)
-            dispatch({type: 'SET_ACTION',data:false});
+            dispatch({type: 'SET_ACTION', data: false});
         }
     }
 
@@ -163,7 +161,11 @@ export let HotDogForm: any = (props: any) => {
         !state.isEdit ?
             <div className="card  ">
                 <div className="card-image">
-                    <img id={'imgEditCard'} src={state.url}/>
+                    <img
+                        alt=''
+                        id={'imgEditCard'}
+                        src={state.url}
+                    />
 
                 </div>
                 <div className="card-content scrolling">
@@ -172,12 +174,21 @@ export let HotDogForm: any = (props: any) => {
                     <p>{props.product.description}</p>
                 </div>
                 <div className="card-action bottom-sheet">
-                    <a className="btn-large btn-card" onClick={clickChangeCard}>Edit</a>
+                    <a
+                        href='#'
+                        className="btn-large btn-card"
+                        onClick={clickChangeCard}
+                    >Edit</a>
                 </div>
-            </div> :
+            </div>
+            :
             <form className="card  ">
                 <div className="card-image">
-                    <img id={'imgEditCard'} src={state.url}/>
+                    <img
+                        id={'imgEditCard'}
+                        src={state.url}
+                        alt=''
+                    />
 
                 </div>
                 <div className="card-content">
@@ -212,7 +223,8 @@ export let HotDogForm: any = (props: any) => {
                         name="description"
                         type="text"
                     />
-                    {state.error.description && <span className={'span-form  red-text'}>{state.error.description}</span>}
+                    {state.error.description &&
+                    <span className={'span-form  red-text'}>{state.error.description}</span>}
 
 
                     <div className="row file-field input-field inline form-input">
@@ -241,11 +253,15 @@ export let HotDogForm: any = (props: any) => {
                     </div>
                 </div>
                 <div className="card-action">
-                    <a className="btn-large btn-edit"
-                       onClick={upgradeHotDog}
+                    <a
+                        href='#'
+                        className="btn-large btn-edit"
+                        onClick={upgradeHotDog}
                     >upgrade</a>
-                    <a className="btn-large btn-edit"
-                       onClick={deleteHotDog}
+                    <a
+                        href='#'
+                        className="btn-large btn-edit"
+                        onClick={deleteHotDog}
                     >delete</a>
                 </div>
             </form>

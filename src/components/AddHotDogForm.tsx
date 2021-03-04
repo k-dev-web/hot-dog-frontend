@@ -149,10 +149,11 @@ export let AddHotDogForm: any = (props: any) => {
                     <div className="card-action ">
                         <a
                             className="button-card add-button black white-text btn-large "
-
+                            href='#'
                             onClick={handleClose}
                         >No Thanks</a>
                         <a
+                            href='#'
                             aria-disabled={props.valid}
                             type="submit"
                             className={"button-card add-button black white-text btn-large submit"}
