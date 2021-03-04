@@ -12,7 +12,7 @@ const dataFetchReducer = (state: any, action: any) => {
         case 'SET_URL':
             return {
                 ...state,
-                url: "http://hot-dog-backend.herokuapp.com/uploads/" + action.data.id + ".jpg?date:" + new Date()
+                url: "https://hot-dog-backend.herokuapp.com/uploads/" + action.data.id + ".jpg?date:" + new Date()
             }
         case 'SET_IS_EDIT':
             return {
@@ -44,7 +44,7 @@ const uniqueName = (value: any, id: any) =>
 export let HotDogForm: any = (props: any) => {
     const {convertImgToBase64, convertUrl, getHotDogs, sendHotDog} = HotDogProvider();
     const [state, dispatch] = useReducer(dataFetchReducer, {
-        url: "http://hot-dog-backend.herokuapp.com/uploads/" + props.product.id + ".jpg?date:" + new Date(),
+        url: "https://hot-dog-backend.herokuapp.com/uploads/" + props.product.id + ".jpg?date:" + new Date(),
         isEdit: false,
         error: {name: '', price: '', description: ''},
         action: false
